@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet } from 'react
 
 function Movies({ navigation }) {
     const API_key = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYTNmMGRmMDRlMWE3MTBiZmYyNDE0YjJjNjk5ZGI5NSIsInN1YiI6IjY0ZmJmYzc4ZWZlYTdhMDBmZDE5NGQ1OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vjITkPseRhTMClOK1gPcW1AfAK7LGcbDQXbuv-n0FO8"; // Insert your actual API Key here
+    
     const [movieData, setMovieData] = useState([]);
 
     useEffect(() => {
@@ -15,13 +16,13 @@ function Movies({ navigation }) {
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYTNmMGRmMDRlMWE3MTBiZmYyNDE0YjJjNjk5ZGI5NSIsInN1YiI6IjY0ZmJmYzc4ZWZlYTdhMDBmZDE5NGQ1OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vjITkPseRhTMClOK1gPcW1AfAK7LGcbDQXbuv-n0FO8',
+                    'Authorization': API_key,  // Replace YOUR_API_KEY with your actual API key
                     'Accept': 'application/json'
                 }
             });
             const responseJson = await response.json();
             if (response.ok) {
-                setMovieData(responseJson.results);
+                setMovieData(responseJson.results);  // Assumes setMovieData is a useState setter function
             } else {
                 console.error('API error:', responseJson.status_message);
             }
@@ -29,6 +30,7 @@ function Movies({ navigation }) {
             console.error('Fetch error:', error);
         }
     };
+    
     
 
     const handleMovie = (movie) => {
@@ -38,7 +40,7 @@ function Movies({ navigation }) {
 
     const renderMovie = ({ item }) => (
         <TouchableOpacity style={styles.movieContainer} onPress={() => handleMovie(item)}>
-          
+           <Image style={styles.image} source={{ uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path }} />
             <Text style={styles.title}>{item.title}</Text>
         </TouchableOpacity>
     );
@@ -63,7 +65,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     movieContainer: {
-        flexDirection: 'row',
+        
+        flexDirection: 'column',
         padding: 10,
         alignItems: 'center'
     },
@@ -79,6 +82,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        color:'black'
     }
 });
 
