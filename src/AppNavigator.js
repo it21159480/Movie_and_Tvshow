@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Movies from './screens/Movies';
 import TVshows from './screens/TVshows';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Feather';
 
 
 const Stack = createNativeStackNavigator();
@@ -25,16 +25,14 @@ function AppNavigator() {
                 screenOptions={{
                     tabBarActiveTintColor: '#980808',
                     tabBarInactiveTintColor: 'gray',
-                    headerShown:false,
-                    tabBarLabelStyle: {
-                        fontSize: 16,  // Set the font size for the tab labels here
-                        marginBottom: 6, 
-                        fontWeight:'bold' // Adjust the bottom margin to position the label correctly
-                      },
+                    headerShown: false,
                     tabBarStyle: {
-                        height: 70,
-                        
-                        // This would incorrectly place the tab bar at the top
+                        height: 60,
+
+                    },
+                    tabBarLabelStyle: {
+                        fontSize: 16,
+                        fontWeight: 'bold'
                     }
                 }}
             >
@@ -42,24 +40,28 @@ function AppNavigator() {
                     name="Movies"
                     component={Movies}
                     options={{
-                       
-                        tabBarIcon: () => (
-                            <FeatherIcon name='film' color={'#980808'} size={35} />
+
+                        tabBarLabel: 'Movies',
+                        tabBarIcon: ({ focused }) => (
+                            <Icon name="film" color={focused ? '#980808' : 'gray'} size={focused ? 25 : 18} />
                         ),
-                        tabBarLabel: 'Movies'  
-                        
+                        tabBarLabelStyle: {
+                            fontSize: 16,
+                            fontWeight: 'bold'
+                        }
+
                     }}
                 />
                 <BottomTab.Screen
                     name="TVshows"
                     component={TVshows}
                     options={{
-                        tabBarIcon: () => (
-                            <FeatherIcon name="tv" color={'black'} size={35} />
+                        tabBarLabel: 'TV Shows',
+                        tabBarIcon: ({ focused }) => (
+                            <Icon name="tv" color={focused ? '#980808' : 'gray'} size={focused ? 25 : 20} />
                         ),
-                        tabBarLabel: 'TVshows'  
                     }}
-                    
+
                 />
             </BottomTab.Navigator>
         </NavigationContainer>
